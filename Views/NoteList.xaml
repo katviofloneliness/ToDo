@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDo.Views.NoteList"
+             Title="Your notes">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add"
+                     x:Name="AddToolBarItem"
+                     Clicked="AddToolBarItem_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <SearchBar Placeholder="Search"
+                       x:Name="TxtSearch"
+                       TextChanged="TxtSearch_TextChanged"
+                       SearchButtonPressed="TxtSearch_SearchButtonPressed"></SearchBar>
+            <ListView x:Name="NoteListView" 
+                  ItemsSource="{Binding notes}"
+                  HasUnevenRows="True"
+                  ItemTapped="NoteListView_ItemTapped"                  
+                  IsRefreshing="True"
+                  IsPullToRefreshEnabled="True"
+                  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Edit"
+                                          x:Name="EditMenuItem"
+                                          CommandParameter="{Binding Id}"
+                                          Clicked="EditMenuItem_Clicked"></MenuItem>
+                                <MenuItem Text="Delete"
+                                          x:Name="DeleteMenuItem"
+                                          CommandParameter="{Binding Id}"
+                                          Clicked="DeleteMenuItem_Clicked"></MenuItem>
+
+                            </ViewCell.ContextActions>
+                            <SwipeView>
+                                <!--<SwipeView.LeftItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Edit" BackgroundColor="Red"
+                                                   x:Name="EditSwipeItem"
+                                                   CommandParameter="{Binding Id}"
+                                                   Invoked="EditSwipeItem_Invoked"></SwipeItem>
+                                        <SwipeItem Text="Delete" BackgroundColor="Red" CommandParameter="{Binding Id}"
+                                                   x:Name="DeleteSwipeItem"
+                                                   Invoked="DeleteMenuItem_Clicked"></SwipeItem>
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>-->
+                                <StackLayout Orientation="Horizontal" Padding="5">
+                                    <StackLayout HorizontalOptions="StartAndExpand">
+                                        <Label Text="{Binding Name}" FontSize="Medium" />
+                                        <Label Text="{Binding Text}" FontSize="Medium" LineBreakMode="NoWrap" MaxLines="1" />
+                                        
+                                    </StackLayout>
+                                    <StackLayout VerticalOptions="Center"
+                                                 Margin="0,0,20,0"                                                                             
+                                         HorizontalOptions="EndAndExpand">
+                                        <Image Source="edit.png"
+                                       HeightRequest="20"
+                                       WidthRequest="20">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer x:Name="EditTap" Tapped="EditTap_Tapped"
+                                                              CommandParameter="{Binding Id}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                        <Image Source="delete.png"
+                                       HeightRequest="20"
+                                       WidthRequest="20">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer x:Name="DeleteTapp" Tapped="DeleteTapp_Tapped"
+                                                              CommandParameter="{Binding Id}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                        <Image Source="view.png"
+                                       HeightRequest="20"
+                                       WidthRequest="20">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer x:Name="ViewTap" Tapped="ViewTap_ItemTapped"
+                                                              CommandParameter="{Binding Id}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+
+                                    </StackLayout>
+                                </StackLayout>
+                            </SwipeView>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>
